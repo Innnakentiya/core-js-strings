@@ -208,8 +208,18 @@ function removeLastOccurrences(str, value) {
  *   sumOfCodes('') => 0
  *   sumOfCodes() => 0
  */
-function sumOfCodes(/* str */) {
-  throw new Error('Not implemented');
+function sumOfCodes(str) {
+  if (typeof str !== 'string') {
+    return 0;
+  }
+
+  const result = str
+    .split('')
+    .reduce(
+      (accumulator, currentValue) => accumulator + currentValue.charCodeAt(0),
+      0
+    );
+  return result;
 }
 
 /**
@@ -255,8 +265,21 @@ function endsWith(str, substr) {
  *   formatTime(0, 45) => "00:45"
  *   formatTime(0, 0) => "00:00"
  */
-function formatTime(/* minutes, seconds */) {
-  throw new Error('Not implemented');
+function formatTime(minutes, seconds) {
+  const newMinutes = String(minutes).padStart(2, '0');
+  const newSeconds = String(seconds).padStart(2, '0');
+
+  return `${newMinutes}:${newSeconds}`;
+
+  // let newMinutes = minutes;
+  // let newSeconds = seconds;
+  // if (newMinutes < 10) {
+  //   newMinutes = `0${minutes}`;
+  // }
+  // if (newSeconds < 10) {
+  //   newSeconds = `0${seconds}`;
+  // }
+  // return `${newMinutes}:${newSeconds}`;
 }
 
 /**
@@ -318,8 +341,12 @@ function containsSubstring(str, substring) {
  *   countVowels('aEiOu') => 5
  *   countVowels('XYZ') => 1
  */
-function countVowels(/* str */) {
-  throw new Error('Not implemented');
+function countVowels(str) {
+  // const vowels = 'aeiouyAEIOUY';
+  // const vowelStr = Array.from(str.matchAll(new RegExp(`[${vowels}]`, 'g')));
+  // return vowelStr.length;
+  const vowels = 'aeiouyAEIOUY';
+  return str.split('').filter((letter) => vowels.includes(letter)).length;
 }
 
 /**
@@ -335,8 +362,13 @@ function countVowels(/* str */) {
  *   isPalindrome('apple') => false
  *   isPalindrome('No lemon, no melon') => true
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const strCleaned = str.replace(/[^a-zA-Z]/g, '').toLocaleLowerCase();
+  const reversedStr = strCleaned.split('').reverse().join('');
+  if (reversedStr === strCleaned) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -351,8 +383,10 @@ function isPalindrome(/* str */) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
+function findLongestWord(sentence) {
+  const sentenceArr = sentence.split(' ');
+  sentenceArr.sort((a, b) => b.length - a.length);
+  return sentenceArr[0];
 }
 
 /**
@@ -365,8 +399,11 @@ function findLongestWord(/* sentence */) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
+function reverseWords(str) {
+  return str
+    .split(' ')
+    .map((word) => word.split('').reverse().join(''))
+    .join(' ');
 }
 
 /**
@@ -380,8 +417,16 @@ function reverseWords(/* str */) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  let result = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === str[i].toUpperCase()) {
+      result += str[i].toLowerCase();
+    } else {
+      result += str[i].toUpperCase();
+    }
+  }
+  return result;
 }
 
 /**
@@ -411,8 +456,14 @@ function getStringFromTemplate(firstName, lastName) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  const partBefore = value.indexOf(',');
+  let result2;
+  if (partBefore !== -1) {
+    const result1 = value.slice(partBefore + 2); // two spaces after coma //
+    result2 = result1.slice(0, result1.length - 1);
+  }
+  return result2;
 }
 
 /**
@@ -494,8 +545,63 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  return cards.indexOf(value);
 }
 
 module.exports = {
